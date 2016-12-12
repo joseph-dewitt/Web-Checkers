@@ -50,7 +50,7 @@ public class CheckerboardCanvas extends JPanel {
 		setBackground(Color.white);
 		setSize(new Dimension(CheckerBoard.BOARD_SIZE*SQUARE_SIZE + 2*BOARD_BORDER,CheckerBoard.BOARD_SIZE*SQUARE_SIZE + 2*BOARD_BORDER));
 		setMinimumSize(new Dimension(CheckerBoard.BOARD_SIZE*SQUARE_SIZE + 2*BOARD_BORDER,CheckerBoard.BOARD_SIZE*SQUARE_SIZE + 2*BOARD_BORDER));
-		
+		board = new CheckerBoard();
 	}
 
 	/**

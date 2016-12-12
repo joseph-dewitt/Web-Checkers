@@ -4,7 +4,14 @@ import checkers.common.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
 import javax.swing.*;
+import javax.websocket.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.glassfish.tyrus.client.ClientManager;
+
 
 
 public class CheckersClient extends JFrame implements MouseListener {
@@ -17,18 +24,20 @@ public class CheckersClient extends JFrame implements MouseListener {
 	private int fromRow, fromCol;		// Where the checker is moving from
 
 	private SquarePlayer currentPlayer;	
-
-	public CheckersClient() {
+	
+	private int id;
+	public CheckersClient(Session player) {
 
 		super("NetCheckers");
 		setSize(450,450);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);        
-
+		id = (int) Math.round(Math.random() * 100000);
 		board = new CheckerBoard();			// Create the 'model'model
-
+		
 		cbCanvas = new CheckerboardCanvas();
+
 		add(cbCanvas);					// Add the view to this frame
 	
 		addMouseListener(this);				// Have this program listen for mouse events
@@ -64,7 +73,7 @@ public class CheckersClient extends JFrame implements MouseListener {
 
 		int toRow = cbCanvas.getRow(e.getY()-canvasTopInset); // adjust coordinates to account for the checkerboard's location
 		int toCol = cbCanvas.getCol(e.getX());
-
+		Play move = new Play(fromRow, fromCol, toRow, toCol);
 		// TODO: what happens here?
 	}
 
@@ -83,10 +92,19 @@ public class CheckersClient extends JFrame implements MouseListener {
 				new Runnable() {
 					@Override
 					public void run() {
-						CheckersClient game = new CheckersClient();
 						
 						// TODO: does any other setup need to happen?
 						
+						Session player;
+						ClientManager client = ClientManager.createClient();
+						try {
+							player = client.connectToServer(CheckersClient.class, new URI(
+									"ws://localhost:8025/websockets/play"));
+							CheckersClient game = new CheckersClient(player);
+
+						} catch (DeploymentException | URISyntaxException | IOException e) {
+							throw new RuntimeException(e);
+						}
 
 					}
 				});
