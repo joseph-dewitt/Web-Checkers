@@ -13,6 +13,8 @@ public class PlayDecoder implements Decoder.Text<Play>{
 	@Override
 	public Play decode (String play) {
 		//put shit here
+		Play ply = new Play(1,2,3,4);
+		return ply;
 	}
 	
 	@Override

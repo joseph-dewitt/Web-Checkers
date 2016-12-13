@@ -19,8 +19,10 @@ public class CheckersServerEndpoint {
     public void onOpen(Session player) {
     	logger.info("Look out! Here comes " + player.getId());
     	if (model == null) {
-    		model = new CheckersModel();
+    		model = new CheckersModel(player);
     	}
+    	
+    	System.out.println("Here comes dat boi");
     	
     }
 

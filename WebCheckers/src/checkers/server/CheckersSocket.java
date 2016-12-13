@@ -14,15 +14,19 @@ public class CheckersSocket {
 	}
 	
 	public static void openVenue() {
-		Server server = new Server("localhost", 8025, "/checkers", null, CheckersServerEndpoint.class);
+		Server server = new Server("localhost", 9000, "/checkers", null, CheckersServerEndpoint.class);
 		try {
 			server.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
 			Scanner keyboard = new Scanner(System.in);
 			System.out.print("Press a key to stop me.");
+			String message = reader.readLine();
+			System.out.println(message);
 			keyboard.next();	
 			keyboard.close();
 		} catch (Exception e) {
-			System.out.println("Something broke");
+			throw new RuntimeException(e);
 		} finally {
 			
 			server.stop();

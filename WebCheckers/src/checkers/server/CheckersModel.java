@@ -2,6 +2,7 @@ package checkers.server;
 
 import checkers.common.*;
 import java.util.Observable;
+import javax.websocket.*;
 
 
 
@@ -14,12 +15,14 @@ public class CheckersModel extends Observable {
 
 	private CheckerBoard board;					// grid representing the board
 
+	Session player;
 	/**
 	 *	Creates a board with all the pieces in their starting places.
 	 */
 	
-	public CheckersModel() {
-		board = new CheckerBoard();
+	public CheckersModel(Session player) {
+		this.player = player;
+		board = new CheckerBoard(player);
 
 		setPlayers();
 	}
@@ -38,7 +41,7 @@ public class CheckersModel extends Observable {
 	private void clearBoard() {
 		for (int r = 0; r < CheckerBoard.BOARD_SIZE; r++)
 			for (int c = 0; c < CheckerBoard.BOARD_SIZE; c++)
-				board.set(r, c, SquarePlayer.Empty);
+				board.set(r, c, SquarePlayer.Empty, true);
 	}
 
 	/**
@@ -52,7 +55,7 @@ public class CheckersModel extends Observable {
 			startingPos = (row % 2 == 0) ? 1 : 0; // 'even' rows have checkers in the odd squares, and vice-versa
 
 			for (int col = startingPos; col < CheckerBoard.BOARD_SIZE; col = col + 2) {	// every other square
-				board.set(row, col, SquarePlayer.PlayerOne); 
+				board.set(row, col, SquarePlayer.PlayerOne, true); 
 			}
 		}
 
@@ -61,7 +64,7 @@ public class CheckersModel extends Observable {
 			startingPos = (row % 2 == 0) ? 1 : 0; 
 
 			for (int col = startingPos; col < CheckerBoard.BOARD_SIZE; col = col + 2) {
-				board.set(row, col,SquarePlayer.PlayerTwo); 
+				board.set(row, col,SquarePlayer.PlayerTwo, true); 
 			}
 		}
 	}
@@ -208,7 +211,7 @@ public class CheckersModel extends Observable {
 			SquarePlayer player = board.get(fromRow, fromCol);
 			boolean king = board.isKing(fromRow, fromCol);
 
-			board.set(toRow, toCol, player); // 'Copy' the player to its new position
+			board.set(toRow, toCol, player, true); // 'Copy' the player to its new position
 			if (king) {
 				board.makeKing(toRow, toCol);
 			}
@@ -223,9 +226,9 @@ public class CheckersModel extends Observable {
 			}
 			// Remove the jumped player
 			if (jumped)
-				board.set((fromRow+toRow)/2,(fromCol+toCol)/2, SquarePlayer.Empty);
+				board.set((fromRow+toRow)/2,(fromCol+toCol)/2, SquarePlayer.Empty, true);
 
-			board.set(fromRow, fromCol, SquarePlayer.Empty); // Remove player from old location
+			board.set(fromRow, fromCol, SquarePlayer.Empty, true); // Remove player from old location
 
 			setChanged();
 			notifyObservers();

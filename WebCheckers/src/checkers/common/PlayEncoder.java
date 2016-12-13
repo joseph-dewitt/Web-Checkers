@@ -14,7 +14,6 @@ public class PlayEncoder implements Encoder.Text<Play>{
 				.add("fromCol", play.getfromCol())
 				.add("toRow", play.gettoRow())
 				.add("toCol", play.gettoCol())
-                .add("ID", play.getID())
                 .build();
 
         return jsonPlay.toString();

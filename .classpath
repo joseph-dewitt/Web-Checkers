@@ -21,5 +21,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-spi-1.8.3.jar"/>
+	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-framework-2.3.15-gfa.jar"/>
+	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-http-2.3.15-gfa.jar"/>
+	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-http-server-2.3.15-gfa.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
