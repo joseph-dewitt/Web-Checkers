@@ -15,15 +15,12 @@ import java.util.logging.Logger;
 
 import org.glassfish.tyrus.client.ClientManager;
 
-@ClientEndpoint (decoders = { PiecesDecoder.class }, encoders = {
-		PlayEncoder.class })
-
+@ClientEndpoint (decoders = { PiecesDecoder.class }, encoders = {PlayEncoder.class })
 public class CheckersClient extends JFrame implements MouseListener {
 
 	@OnOpen
 	public void onOpen(Session player) {
 		logger.info("Connected ... " + player.getId());
-
 		System.out.println("Yay");
 	}
 	
@@ -64,8 +61,9 @@ public class CheckersClient extends JFrame implements MouseListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);        
 		id = (int) Math.round(Math.random() * 100000);
-		board = new CheckerBoard(player);			// Create the 'model'model
 		
+		board = new CheckerBoard(player);			// Create the 'model'model
+	
 		cbCanvas = new CheckerboardCanvas(board);
 
 		add(cbCanvas);					// Add the view to this frame
@@ -127,15 +125,17 @@ public class CheckersClient extends JFrame implements MouseListener {
 						latch = new CountDownLatch(1);
 
 						Session player;
-						WebSocketContainer container = ContainerProvider
-			                    .getWebSocketContainer();
-						//ClientManager client = ClientManager.createClient();
+						// WebSocketContainer container = ContainerProvider.getWebSocketContainer();
+						ClientManager client = ClientManager.createClient();
 						try {
-							player = container.connectToServer(CheckersClient.class, new URI(
-									"ws://localhost:9000/checkers/play"));
+							/*
+							 * player = container.connectToServer(CheckersClient.class, new URI("ws://localhost:9000/checkers/play"));
 							player.getBasicRemote().sendText("Check me out");
-							System.out.println(player.toString());
-							CheckersClient game = new CheckersClient(player);
+							*/
+							client.connectToServer(CheckersClient.class, new URI("ws://localhost:9000/checkers/play"));
+				            
+//							System.out.println(player.toString());
+//							CheckersClient game = new CheckersClient(player);
 							latch.await();
 
 							System.out.println("Made a game");

@@ -30,4 +30,10 @@ public class CheckersServerEndpoint {
     public void onMessage(Session player, Play play) throws EncodeException {
     	
     }
+    
+    @OnClose
+	public void onClose(Session session, CloseReason closeReason) {
+		logger.info(String.format("2Session %s closed because of %s",
+				session.getId(), closeReason));
+	}
 }

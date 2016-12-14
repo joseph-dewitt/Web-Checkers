@@ -18,13 +18,9 @@ public class CheckersSocket {
 		try {
 			server.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-			Scanner keyboard = new Scanner(System.in);
-			System.out.print("Press a key to stop me.");
+			System.out.print("Press return to stop me.");
 			String message = reader.readLine();
 			System.out.println(message);
-			keyboard.next();	
-			keyboard.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
