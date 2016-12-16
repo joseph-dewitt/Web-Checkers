@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/tyrus-client-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/tyrus-container-glassfish-cdi-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/tyrus-container-grizzly-client-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/tyrus-container-servlet-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/tyrus-core-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/tyrus-server-1.8.3.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Wordgame/lib/tyrus-server-1.8.3-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/tyrus-spi-1.8.3.jar"/>
-	<classpathentry kind="lib" path="lib/javax.websocket-api-1.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Wordgame/lib/javax.websocket-api-1.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="lib/tyrus-container-grizzly-server-1.8.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/cdi-api-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/el-api-2.2.jar"/>
 	<classpathentry kind="lib" path="lib/grizzly-framework-2.3.15-gfa.jar"/>
@@ -25,43 +9,21 @@
 	<classpathentry kind="lib" path="lib/grizzly-http-server-2.3.15-gfa.jar"/>
 	<classpathentry kind="lib" path="lib/javax.ejb-api-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="lib/javax.transaction-api-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar"/>
-	<classpathentry kind="lib" path="lib/jsr250-api-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/javax.json-1.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/javax.json-api-1.0.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/javax.websocket-client-api-1.0-rc4-sources.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/cdi-api-1.1.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/el-api-2.2.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-framework-2.3.15-gfa.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-http-2.3.15-gfa.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/grizzly-http-server-2.3.15-gfa.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.ejb-api-3.2.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.inject-1.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.json-1.0.4.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.json-api-1.0.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.transaction-api-1.2.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.websocket-api-1.1-javadoc.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/javax.websocket-api-1.1.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Wordgame/lib/javax.websocket-api-1.1-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/jsr250-api-1.0.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-client-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-container-glassfish-cdi-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-container-grizzly-client-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-container-grizzly-server-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-container-servlet-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-core-1.8.3.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-server-1.8.3-javadoc.jar"/>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-server-1.8.3.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/Wordgame/lib/tyrus-server-1.8.3-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="/WebSocketPoke/lib/tyrus-spi-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/javax.transaction-api-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/javax.websocket-api-1.1-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/javax.websocket-api-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar"/>
+	<classpathentry kind="lib" path="lib/jsr250-api-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-client-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-container-glassfish-cdi-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-container-grizzly-client-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-container-grizzly-server-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-container-servlet-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-core-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-server-1.8.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-server-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/tyrus-spi-1.8.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

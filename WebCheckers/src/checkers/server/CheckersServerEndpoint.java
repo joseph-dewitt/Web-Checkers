@@ -25,10 +25,14 @@ public class CheckersServerEndpoint {
     	System.out.println("Here comes dat boi");
     	
     }
-
+/*
     @OnMessage
     public void onMessage(Session player, Play play) throws EncodeException {
     	
+    }*/
+    @OnMessage
+    public void textMessage(Session player, String message) {
+    	System.out.println(message);
     }
     
     @OnClose
