@@ -25,13 +25,14 @@ public class CheckersClientEndpoint {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        checkersClient = new CheckersClient(player);
+
 		System.out.println("Yay");
 	}
 	
 	@OnMessage
 	public void onMessage (Session player, Pieces piece) {
-		System.out.println("Gotta message here");
-		//board.set(piece.getRow(), piece.getCol(), SquarePlayer.valueOf(piece.getPlayer()), false);
+		checkersClient.gotMessage(piece.getRow(), piece.getCol(), SquarePlayer.valueOf(piece.getPlayer()));
 	}
 	
 	
@@ -44,7 +45,7 @@ public class CheckersClientEndpoint {
 	
 	private static CountDownLatch latch;
 	private Logger logger = Logger.getLogger(this.getClass().getName());
-	private static CheckersClient checkersClient;
+	public static CheckersClient checkersClient;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -55,7 +56,6 @@ public class CheckersClientEndpoint {
 		try {
 			player = client.connectToServer(CheckersClientEndpoint.class, new URI("ws://localhost:9000/checkers/play"));
             player.getBasicRemote().sendText("Hi I'm Joe.");
-            checkersClient = new CheckersClient(player);
 			latch.await();
 
 			System.out.println("Made a game");

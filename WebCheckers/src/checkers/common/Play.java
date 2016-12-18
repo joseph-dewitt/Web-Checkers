@@ -10,19 +10,19 @@ public class Play {
 		this.toCol = toCol;
 	}
 	
-	int getfromRow() {
+	public int getfromRow() {
 		return fromRow;
 	}
 	
-	int getfromCol() {
+	public int getfromCol() {
 		return fromCol;
 	}
 	
-	int gettoRow() {
+	public int gettoRow() {
 		return toRow;
 	}
 	
-	int gettoCol() {
+	public int gettoCol() {
 		return toCol;
 	}
 }

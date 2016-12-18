@@ -15,7 +15,7 @@ public class PlayEncoder implements Encoder.Text<Play>{
 				.add("toRow", play.gettoRow())
 				.add("toCol", play.gettoCol())
                 .build();
-
+		System.out.println(jsonPlay);
         return jsonPlay.toString();
     }	
 

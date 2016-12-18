@@ -30,6 +30,8 @@ public class CheckersClient extends JFrame implements MouseListener {
 	
 	private int id;
 	
+	public Session player;
+	
 	
 	public CheckersClient(Session player) {
 
@@ -39,8 +41,9 @@ public class CheckersClient extends JFrame implements MouseListener {
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);        
 		id = (int) Math.round(Math.random() * 100000);
+		this.player = player;
 		
-		board = new CheckerBoard(player);			// Create the 'model'model
+		board = new CheckerBoard();			// Create the 'model'model
 	
 		cbCanvas = new CheckerboardCanvas(board);
 
@@ -51,6 +54,11 @@ public class CheckersClient extends JFrame implements MouseListener {
 		setVisible(true);
 		canvasTopInset = getInsets().top;	// may be needed to get accurate mouse-click location
 
+	}
+	
+	public void gotMessage (int row, int col, SquarePlayer p) {
+		board.set(row, col, p);
+		cbCanvas.repaint();
 	}
 
 	/**
@@ -81,6 +89,11 @@ public class CheckersClient extends JFrame implements MouseListener {
 		int toCol = cbCanvas.getCol(e.getX());
 		Play move = new Play(fromRow, fromCol, toRow, toCol);
 		// TODO: what happens here?
+		try {
+			player.getBasicRemote().sendObject(move);
+		} catch (IOException | EncodeException e1) {
+			e1.printStackTrace();
+		}
 	}
 
 

@@ -20,7 +20,7 @@ public class PiecesDecoder implements Decoder.Text<Pieces> {
 				jsonObject.getInt("col"), 
 				SquarePlayer.valueOf(jsonObject.getString("player"))
 				);
-		System.out.println("decoded");
+		System.out.println(jsonObject);
 		return thing;
 	}
 	

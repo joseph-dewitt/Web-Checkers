@@ -14,7 +14,7 @@ public class PiecesEncoder implements Encoder.Text<Pieces>{
 				.add("col", piece.getCol())
 				.add("player", piece.getPlayer())
 				.build();
-		System.out.println("encoded");
+		System.out.println(jsonPieces);
 		return jsonPieces.toString();
 	}
 

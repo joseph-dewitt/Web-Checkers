@@ -10,8 +10,9 @@ public class Square {
 		clear();
 	}
 
-	public void setPlayer(SquarePlayer player) {
-		this.player = player;
+	public void setPlayer(SquarePlayer thing) {
+		
+		player = thing;
 	}
 
 	public SquarePlayer getPlayer() {

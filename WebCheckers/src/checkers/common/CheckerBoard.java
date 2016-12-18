@@ -9,13 +9,12 @@ import javax.websocket.*;
 public class CheckerBoard {
 	private Square board[][];
 	static final public int BOARD_SIZE = 8;			// this is fixed and public; part of Checkers
-	Session player;
 
 	/**
 	 *	Creates an empty board.
 	 */
 	
-	public CheckerBoard(Session player) {
+	public CheckerBoard() {
 		board = new Square[BOARD_SIZE][BOARD_SIZE];
 
 		for (int row = 0; row < BOARD_SIZE; row++) {
@@ -23,7 +22,6 @@ public class CheckerBoard {
 				board[row][col] = new Square();	
 			}
 		}
-		this.player = player;
 	}
 
 	/**
@@ -69,8 +67,10 @@ public class CheckerBoard {
 	 */
 	
 	public boolean squareIsOccupied(int r, int c) {
-		if (!validLocation(r,c))
+		if (!validLocation(r,c)){
+			System.out.println("It's not a valid location");
 			return false;
+		}
 		return !(board[r][c].isEmpty());
 	}
 	
@@ -111,19 +111,10 @@ public class CheckerBoard {
 		board[r][c].makeKing();
 	}
 	
-	public void set(int r, int c, SquarePlayer p, boolean model) {
+	public void set(int r, int c, SquarePlayer p) {
+		System.out.println("Set place " + r + ", " + c + " to " + p.toString());
 		board[r][c].setPlayer(p);
-		Pieces piece = new Pieces(r, c, p);
-		if (model) {
-			/*try {
-				player.getBasicRemote().sendObject(piece);
-				System.out.println("Gonna try to send something");
-			} catch (IOException | EncodeException e) {
-				System.err.println("Problem with sending a piece.");
-				throw new RuntimeException(e);
-				}*/
-			}
-		}
+	}
 	
 
 	public SquarePlayer get(int r, int c) {

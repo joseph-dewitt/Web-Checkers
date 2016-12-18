@@ -11,9 +11,16 @@ import javax.websocket.EndpointConfig;
 public class PlayDecoder implements Decoder.Text<Play>{
 	
 	@Override
-	public Play decode (String play) {
+	public Play decode (String move) {
 		//put shit here
-		Play ply = new Play(1,2,3,4);
+		JsonObject jsonObject = Json.createReader(new StringReader(move))
+				.readObject();
+		System.out.println(jsonObject);
+		Play ply = new Play(
+				jsonObject.getInt("fromRow"),
+				jsonObject.getInt("fromCol"),
+				jsonObject.getInt("toRow"),
+				jsonObject.getInt("toCol"));
 		return ply;
 	}
 	

@@ -1,6 +1,8 @@
 package checkers.server;
 
 import checkers.common.*;
+
+import java.io.IOException;
 import java.util.Observable;
 import javax.websocket.*;
 
@@ -15,14 +17,16 @@ public class CheckersModel extends Observable {
 
 	private CheckerBoard board;					// grid representing the board
 
-	Session player;
+	Session player1;
+	Session player2;
 	/**
 	 *	Creates a board with all the pieces in their starting places.
 	 */
 	
-	public CheckersModel(Session player) {
-		this.player = player;
-		board = new CheckerBoard(player);
+	public CheckersModel(Session player1, Session player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+		board = new CheckerBoard();
 
 		setPlayers();
 	}
@@ -41,7 +45,7 @@ public class CheckersModel extends Observable {
 	private void clearBoard() {
 		for (int r = 0; r < CheckerBoard.BOARD_SIZE; r++)
 			for (int c = 0; c < CheckerBoard.BOARD_SIZE; c++)
-				board.set(r, c, SquarePlayer.Empty, true);
+				placePiece(r, c, SquarePlayer.Empty);
 	}
 
 	/**
@@ -55,7 +59,7 @@ public class CheckersModel extends Observable {
 			startingPos = (row % 2 == 0) ? 1 : 0; // 'even' rows have checkers in the odd squares, and vice-versa
 
 			for (int col = startingPos; col < CheckerBoard.BOARD_SIZE; col = col + 2) {	// every other square
-				board.set(row, col, SquarePlayer.PlayerOne, true); 
+				placePiece(row, col, SquarePlayer.PlayerOne); 
 			}
 		}
 
@@ -64,7 +68,7 @@ public class CheckersModel extends Observable {
 			startingPos = (row % 2 == 0) ? 1 : 0; 
 
 			for (int col = startingPos; col < CheckerBoard.BOARD_SIZE; col = col + 2) {
-				board.set(row, col,SquarePlayer.PlayerTwo, true); 
+				placePiece(row, col,SquarePlayer.PlayerTwo); 
 			}
 		}
 	}
@@ -133,7 +137,7 @@ public class CheckersModel extends Observable {
 			if (Math.abs(fromRow - toRow) != 1)
 				return false;
 		}
-
+		System.out.println("The move is valid");
 		return true;
 	}
 
@@ -150,12 +154,16 @@ public class CheckersModel extends Observable {
 	public boolean jumpIsValid(int fromRow, int fromCol, int toRow, int toCol)
 	{
 		// Must move within the board
-		if (!board.validLocation(toRow, toCol))
+		if (!board.validLocation(toRow, toCol)){
+			System.out.println("Not a valid jump");
 			return false;
+		}
 
 		// Must move to a black square that is not occupied
-		if (!board.squareIsBlack(toRow, toCol) || board.squareIsOccupied(toRow, toCol))
+		if (!board.squareIsBlack(toRow, toCol) || board.squareIsOccupied(toRow, toCol)) {
+			System.out.println("Must move to a black square that is not occupied");
 			return false;
+		}
 
 		// It not a King must move forward
 		// Player one goes from the top to the bottom
@@ -170,8 +178,10 @@ public class CheckersModel extends Observable {
 				if (isOpponent(fromRow, fromCol, fromRow+1, (fromCol+toCol)/2)) { // Make sure there is an opponent in-between
 					return true;
 				}
+				
 				return false;
 			}
+			
 			else { // Must be PlayerTwo
 				
 				if (fromRow - 2 != toRow)	// Must move exactly two rows forward on a jump (up board)
@@ -179,6 +189,7 @@ public class CheckersModel extends Observable {
 
 				if (isOpponent(fromRow, fromCol, fromRow-1, (fromCol+toCol)/2)) // Make sure there is an opponent  in-between
 					return true;
+				
 				return false;
 			}
 		}
@@ -203,32 +214,33 @@ public class CheckersModel extends Observable {
 	@return returns true if a move has been made
 	 */
 	public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
-
+		System.out.println(board.get(fromRow, fromCol).toString());
+		System.out.println(board.get(toRow, toCol).toString());
 		boolean jumped = jumpIsValid(fromRow, fromCol, toRow, toCol);
 
 		if (jumped || moveIsValid(fromRow, fromCol, toRow, toCol)) { // if this is a legal move, then execute it
 			
-			SquarePlayer player = board.get(fromRow, fromCol);
+			SquarePlayer piece = board.get(fromRow, fromCol);
 			boolean king = board.isKing(fromRow, fromCol);
 
-			board.set(toRow, toCol, player, true); // 'Copy' the player to its new position
+			placePiece(toRow, toCol, piece); // 'Copy' the player to its new position
 			if (king) {
 				board.makeKing(toRow, toCol);
 			}
 
-			if (player == SquarePlayer.PlayerOne && toRow == CheckerBoard.BOARD_SIZE-1) {// Check to see if the player is now a king
+			if (piece == SquarePlayer.PlayerOne && toRow == CheckerBoard.BOARD_SIZE-1) {// Check to see if the player is now a king
 				board.makeKing(toRow, toCol);
 				
 			}
-			else if (player == SquarePlayer.PlayerTwo && toRow == 0) {
+			else if (piece == SquarePlayer.PlayerTwo && toRow == 0) {
 				board.makeKing(toRow, toCol);
 				
 			}
 			// Remove the jumped player
 			if (jumped)
-				board.set((fromRow+toRow)/2,(fromCol+toCol)/2, SquarePlayer.Empty, true);
+				placePiece((fromRow+toRow)/2,(fromCol+toCol)/2, SquarePlayer.Empty);
 
-			board.set(fromRow, fromCol, SquarePlayer.Empty, true); // Remove player from old location
+			placePiece(fromRow, fromCol, SquarePlayer.Empty); // Remove player from old location
 
 			setChanged();
 			notifyObservers();
@@ -238,6 +250,21 @@ public class CheckersModel extends Observable {
 			return false;
 		}
 
+	}
+	
+	public void placePiece (int toRow, int toCol, SquarePlayer p) {
+		board.set(toRow, toCol, p);
+		
+		Pieces piece = new Pieces (toRow, toCol, p);
+			try {
+				player1.getBasicRemote().sendObject(piece);
+				player2.getBasicRemote().sendObject(piece);
+				System.out.println("Gonna try to send something");
+			} catch (IOException | EncodeException e) {
+				System.err.println("Problem with sending a piece.");
+				throw new RuntimeException(e);
+				}
+		
 	}
 
 
