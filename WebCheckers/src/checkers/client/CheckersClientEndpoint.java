@@ -19,12 +19,12 @@ public class CheckersClientEndpoint {
 	@OnOpen
 	public void onOpen(Session player) {
 		logger.info("Connected ... " + player.getId());
-		try {
+	/*	try {
 			player.getBasicRemote().sendText("Are you still there?");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
         checkersClient = new CheckersClient(player);
 
 		System.out.println("Yay");

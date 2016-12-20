@@ -12,7 +12,6 @@ public class PlayDecoder implements Decoder.Text<Play>{
 	
 	@Override
 	public Play decode (String move) {
-		//put shit here
 		JsonObject jsonObject = Json.createReader(new StringReader(move))
 				.readObject();
 		System.out.println(jsonObject);

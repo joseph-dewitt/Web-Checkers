@@ -25,4 +25,5 @@ public class Play {
 	public int gettoCol() {
 		return toCol;
 	}
+	
 }

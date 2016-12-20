@@ -17,8 +17,9 @@ public class CheckersModel extends Observable {
 
 	private CheckerBoard board;					// grid representing the board
 
-	Session player1;
-	Session player2;
+	private Session player1;
+	private Session player2;
+	private SquarePlayer turn = SquarePlayer.valueOf("PlayerOne");
 	/**
 	 *	Creates a board with all the pieces in their starting places.
 	 */
@@ -213,9 +214,20 @@ public class CheckersModel extends Observable {
 	@param toCol column location of checkerboard
 	@return returns true if a move has been made
 	 */
-	public boolean move(int fromRow, int fromCol, int toRow, int toCol) {
-		System.out.println(board.get(fromRow, fromCol).toString());
-		System.out.println(board.get(toRow, toCol).toString());
+	public boolean move(int fromRow, int fromCol, int toRow, int toCol, SquarePlayer client) {
+		
+		//check if it's their turn
+		//if the move is made, switch whose turn it is
+		if (client != turn) {
+			System.out.println("It ain't your turn, maggot!");
+			return false;
+		}
+		
+		if(client != board.get(fromRow, fromCol)) {
+			System.out.println("That's not your piece, bitch!");
+			return false;
+		}
+		
 		boolean jumped = jumpIsValid(fromRow, fromCol, toRow, toCol);
 
 		if (jumped || moveIsValid(fromRow, fromCol, toRow, toCol)) { // if this is a legal move, then execute it
@@ -241,10 +253,14 @@ public class CheckersModel extends Observable {
 				placePiece((fromRow+toRow)/2,(fromCol+toCol)/2, SquarePlayer.Empty);
 
 			placePiece(fromRow, fromCol, SquarePlayer.Empty); // Remove player from old location
-
+			
+			turn = turn.swap();
 			setChanged();
 			notifyObservers();
-
+			
+			if(gameOver()) {
+				System.out.println("That's all, folks");
+			}
 			return true;
 		} else {
 			return false;
@@ -303,5 +319,13 @@ public class CheckersModel extends Observable {
 	public boolean canMoveFrom(SquarePlayer currentPlayer, int fromRow, int fromCol) {
 		return (board.get(fromRow, fromCol) == currentPlayer);
 
+	}
+	
+	public String getPlayer1() {
+		return player1.getId();
+	}
+	
+	public String getPlayer2() {
+		return player2.getId();
 	}
 }

@@ -36,7 +36,7 @@ public class CheckersClient extends JFrame implements MouseListener {
 	public CheckersClient(Session player) {
 
 		super("NetCheckers");
-		setSize(450,450);
+		setSize(700,450); //expand this
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);        
@@ -47,7 +47,9 @@ public class CheckersClient extends JFrame implements MouseListener {
 	
 		cbCanvas = new CheckerboardCanvas(board);
 
-		add(cbCanvas);					// Add the view to this frame
+		add(BorderLayout.WEST, cbCanvas);					// Add the view to this frame
+		//add textarea and textfield
+		//add button that sends string textfield to server
 	
 		addMouseListener(this);				// Have this program listen for mouse events
 
