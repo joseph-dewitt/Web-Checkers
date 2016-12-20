@@ -19,6 +19,7 @@ public class CheckersClient extends JFrame implements MouseListener {
 
 	private CheckerboardCanvas cbCanvas; // the 'view' of the checkerboard
 	private CheckerBoard board;			// the client's part of the 'model'
+	private CheckersChat chatter;
 
 	private int canvasTopInset;			// distance Canvas is placed from the top
 
@@ -36,7 +37,7 @@ public class CheckersClient extends JFrame implements MouseListener {
 	public CheckersClient(Session player) {
 
 		super("NetCheckers");
-		setSize(700,450); //expand this
+		setSize(900,450); //expand this
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);        
@@ -47,9 +48,9 @@ public class CheckersClient extends JFrame implements MouseListener {
 	
 		cbCanvas = new CheckerboardCanvas(board);
 
-		add(BorderLayout.WEST, cbCanvas);					// Add the view to this frame
-		//add textarea and textfield
-		//add button that sends string textfield to server
+		add(cbCanvas);					// Add the view to this frame
+		chatter = new CheckersChat(player);
+		add(BorderLayout.EAST, chatter);
 	
 		addMouseListener(this);				// Have this program listen for mouse events
 
@@ -58,9 +59,13 @@ public class CheckersClient extends JFrame implements MouseListener {
 
 	}
 	
-	public void gotMessage (int row, int col, SquarePlayer p) {
+	public void gotPiece (int row, int col, SquarePlayer p) {
 		board.set(row, col, p);
 		cbCanvas.repaint();
+	}
+	
+	public void gotMessage(String msg) {
+		chatter.received(msg);
 	}
 
 	/**

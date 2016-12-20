@@ -10,6 +10,7 @@ public class PlayEncoder implements Encoder.Text<Play>{
 	@Override
 	public String encode(Play play) throws EncodeException {
 		JsonObject jsonPlay = Json.createObjectBuilder()
+				.add("type", "play")
 				.add("fromRow", play.getfromRow())
 				.add("fromCol", play.getfromCol())
 				.add("toRow", play.gettoRow())
@@ -18,6 +19,8 @@ public class PlayEncoder implements Encoder.Text<Play>{
 		System.out.println(jsonPlay);
         return jsonPlay.toString();
     }	
+	
+	
 
 	@Override
 	public void destroy() {

@@ -328,4 +328,12 @@ public class CheckersModel extends Observable {
 	public String getPlayer2() {
 		return player2.getId();
 	}
+	
+	public Session getSession1() {
+		return player1;
+	}
+	
+	public Session getSession2() {
+		return player2;
+	}
 }

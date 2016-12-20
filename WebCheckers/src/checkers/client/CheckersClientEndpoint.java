@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
-@ClientEndpoint (decoders = { PiecesDecoder.class }, encoders = {PlayEncoder.class })
+@ClientEndpoint (decoders = { PlayDecoder.class }, encoders = {PlayEncoder.class })
 
 public class CheckersClientEndpoint {
 
@@ -31,8 +31,16 @@ public class CheckersClientEndpoint {
 	}
 	
 	@OnMessage
-	public void onMessage (Session player, Pieces piece) {
-		checkersClient.gotMessage(piece.getRow(), piece.getCol(), SquarePlayer.valueOf(piece.getPlayer()));
+	public void onMessage (Session player, Message msg) {
+		if (msg instanceof Pieces) {
+			Pieces piece = (Pieces) msg;
+			checkersClient.gotPiece(piece.getRow(), piece.getCol(), SquarePlayer.valueOf(piece.getPlayer()));
+		}
+		if (msg instanceof chatMessage) {
+			chatMessage stuff = (chatMessage) msg;
+			checkersClient.gotMessage(stuff.get());
+			System.out.println(stuff.get());
+		}
 	}
 	
 	

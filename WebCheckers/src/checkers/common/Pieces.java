@@ -1,6 +1,6 @@
 package checkers.common;
 
-public class Pieces {
+public class Pieces extends Message{
 	int row;
 	int col;
 	SquarePlayer p;

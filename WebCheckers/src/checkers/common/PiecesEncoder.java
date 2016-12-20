@@ -10,6 +10,7 @@ public class PiecesEncoder implements Encoder.Text<Pieces>{
 	@Override
 	public String encode(Pieces piece) {
 		JsonObject jsonPieces = Json.createObjectBuilder()
+				.add("type", "piece")
 				.add("row", piece.getRow())
 				.add("col", piece.getCol())
 				.add("player", piece.getPlayer())

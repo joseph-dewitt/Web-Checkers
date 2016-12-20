@@ -1,6 +1,6 @@
 package checkers.common;
 
-public class Play {
+public class Play extends Message{
 	private int fromRow, fromCol, toRow, toCol;
 	
 	public Play (int fromRow, int fromCol, int toRow, int toCol) {

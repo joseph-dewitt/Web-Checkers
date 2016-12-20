@@ -11,7 +11,7 @@ import checkers.common.*;
 
 
 @ServerEndpoint(value = "/play",decoders = { PlayDecoder.class }, encoders = {
-		PiecesEncoder.class})
+		PiecesEncoder.class, chatMessageEncoder.class})
 public class CheckersServerEndpoint {
 	
     private Logger logger = Logger.getLogger(this.getClass().getName());
@@ -34,24 +34,45 @@ public class CheckersServerEndpoint {
     }
 
     @OnMessage
-    public void onMessage(Session player, Play play) throws EncodeException {
+    public void onMessage(Session player, Message msg) throws EncodeException {
     	for (int i = 0; i < model.size(); i++) {
     		if (player.getId().equals(model.get(i).getPlayer1())) {
-    			model.get(i).move(	play.getfromRow(),
-    								play.getfromCol(),
-    								play.gettoRow(),
-    								play.gettoCol(),
-    								SquarePlayer.valueOf("PlayerOne"));
+    			if (msg instanceof Play) {
+    				Play play = (Play) msg;
+    				model.get(i).move(	play.getfromRow(),
+    									play.getfromCol(),
+    									play.gettoRow(),
+    									play.gettoCol(),
+    									SquarePlayer.valueOf("PlayerOne"));
+    			}
+    			if (msg instanceof chatMessage) {
+    				try {
+    	                model.get(i).getSession1().getBasicRemote().sendObject((chatMessage) msg);
+    	                model.get(i).getSession2().getBasicRemote().sendObject((chatMessage) msg);    	                
+    	            } catch (IOException ex) {
+    	                Logger.getLogger(CheckersServerEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+    	            }
+    			}
     		}
     		if (player.getId().equals(model.get(i).getPlayer2())) {
-    			model.get(i).move(	play.getfromRow(), 
+    			if (msg instanceof Play) {
+    				Play play = (Play) msg;
+    				model.get(i).move(	play.getfromRow(), 
     								play.getfromCol(), 
     								play.gettoRow(), 
     								play.gettoCol(), 
     								SquarePlayer.valueOf("PlayerTwo"));
+    			}
+    			if (msg instanceof chatMessage) {
+    				try {
+    	                model.get(i).getSession1().getBasicRemote().sendObject((chatMessage) msg);
+    	                model.get(i).getSession2().getBasicRemote().sendObject((chatMessage) msg);    	                
+    	            } catch (IOException ex) {
+    	                Logger.getLogger(CheckersServerEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+    	            }
+    			}
     		}
     	}
-    	
     }
     
     @OnClose
