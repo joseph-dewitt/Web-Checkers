@@ -29,7 +29,7 @@ public class CheckersServerEndpoint {
     	else {
     		waitingPlayer = player;
     		waiting = true;
-    		System.out.println("He's gonna wait");
+    		System.out.println("He's gonna have to wait for an opponent");
     	}
     }
 

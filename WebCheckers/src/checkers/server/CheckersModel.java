@@ -219,12 +219,12 @@ public class CheckersModel extends Observable {
 		//check if it's their turn
 		//if the move is made, switch whose turn it is
 		if (client != turn) {
-			System.out.println("It ain't your turn, maggot!");
+			System.out.println("It's not this player's turn");
 			return false;
 		}
 		
 		if(client != board.get(fromRow, fromCol)) {
-			System.out.println("That's not your piece, bitch!");
+			System.out.println("That's not this player's piece");
 			return false;
 		}
 		
@@ -275,9 +275,9 @@ public class CheckersModel extends Observable {
 			try {
 				player1.getBasicRemote().sendObject(piece);
 				player2.getBasicRemote().sendObject(piece);
-				System.out.println("Gonna try to send something");
+				System.out.println("Sending JSON message");
 			} catch (IOException | EncodeException e) {
-				System.err.println("Problem with sending a piece.");
+				System.err.println("Message sending failed");
 				throw new RuntimeException(e);
 				}
 		
