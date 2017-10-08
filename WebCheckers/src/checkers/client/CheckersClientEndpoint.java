@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Logger;
 
-@ClientEndpoint (decoders = { PlayDecoder.class }, encoders = {PlayEncoder.class })
+@ClientEndpoint (decoders = { PlayDecoder.class }, encoders = {PlayEncoder.class, chatMessageEncoder.class })
 
 public class CheckersClientEndpoint {
 

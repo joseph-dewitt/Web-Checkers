@@ -97,6 +97,7 @@ public class CheckersClient extends JFrame implements MouseListener {
 		Play move = new Play(fromRow, fromCol, toRow, toCol);
 		// TODO: what happens here?
 		try {
+			System.out.println(player.getBasicRemote());
 			player.getBasicRemote().sendObject(move);
 		} catch (IOException | EncodeException e1) {
 			e1.printStackTrace();
