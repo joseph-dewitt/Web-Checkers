@@ -32,12 +32,13 @@ public class CheckersChat extends JPanel implements ActionListener{
 		
 		send.addActionListener(this);
 		add(send);
+
+		entry.requestFocusInWindow();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("actionPerformed");
-		System.out.println(entry.getText());
 		chatMessage msg = new chatMessage(entry.getText());
 		System.out.println(msg);
 		try {
