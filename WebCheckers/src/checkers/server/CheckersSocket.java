@@ -14,7 +14,7 @@ public class CheckersSocket {
 	}
 	
 	public static void openVenue() {
-		Server server = new Server("localhost", 9000, "/checkers", null, CheckersServerEndpoint.class);
+		Server server = new Server("52.14.249.154", 9000, "/checkers", null, CheckersServerEndpoint.class);
 		try {
 			server.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));

@@ -62,7 +62,7 @@ public class CheckersClientEndpoint {
 		Session player;
 		ClientManager client = ClientManager.createClient();
 		try {
-			player = client.connectToServer(CheckersClientEndpoint.class, new URI("ws://localhost:9000/checkers/play"));
+			player = client.connectToServer(CheckersClientEndpoint.class, new URI("ws://52.14.249.154:9000/checkers/play"));
             player.getBasicRemote().sendText("Hi I'm Joe.");
 			latch.await();
 
